@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pot: 9.99
+  big_blind: 9.99
+  small_blind: 9.99
+  call_value: 9.99
+
+two:
+  pot: 9.99
+  big_blind: 9.99
+  small_blind: 9.99
+  call_value: 9.99

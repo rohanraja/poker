@@ -1,0 +1,77 @@
+<% if player.pass == true && player.is_playing == true  %>
+	<li class="span3 passed">
+<% end %>
+
+<% if player.is_playing == false %>
+	<li class="span3 folded">
+<% end %>
+
+<% if player.pass == false && player.is_playing == true && player.winner == false %>	
+	
+	<li class="span3">
+	
+<% end %>
+
+<% if player.pass == false && player.is_playing == true && player.winner == true %>	
+	
+	<li class="span3 winner">
+	
+<% end %>
+
+
+
+<% @curr = current_round %>
+	<div class="thumbnail" style="text-align:center">
+
+	  <img data-src="holder.js/300x200" alt="300x200" style="width: 160px; height: 180px; margin-top:10px" src=
+	  <%=  "https://graph.facebook.com/" + player.imageurl + "/picture?width=160&height=180" %>
+
+	  >
+
+	  <div class="caption">
+	    <h3> <%= player.name %> </h3>
+	    <p><h4>Bal : <%= number_to_currency(player.balance, :unit => "₹")   %></h4></p>
+	    <p><h4>Thrown : <%=  number_to_currency(round_estimate(player, current_round), :unit => "₹") %></h4></p><hr>
+	    <p>				     
+	    
+	    <% if @curr.level < 5 %>
+
+	     <%= form_tag(line_items_path(:fold => 1, :player_id => player), method: "post") do %>
+
+			  <%= submit_tag("Fold", :class => 'btn-info btn') %>
+			<% end %>
+
+				     <%= form_tag(line_items_path(:allin => 1, :player_id => player, :round_id => current_round, :level => @curr.level, :pass => true), method: "post") do %>
+
+			  <%= submit_tag("All In", :class => 'btn-warning btn') %>
+			<% end %>
+
+	 
+
+		
+	      
+	      <%= button_to "Call : ₹ #{get_call_val(player, @curr)}", line_items_path(:player_id => player, :round_id => current_round, :level => @curr.level, :amount => get_call_val(player, @curr), :pass => true) , :class => 'btn btn-success' %> 
+
+	   <!--    <div style="" class="raise_btn"><a href="#" class="btn-danger btn">Raise</a> <input style="width:50px"></div> -->
+
+		    <%= form_tag(line_items_path(:player_id => player, :round_id => current_round, :level => @curr.level, :pass => true), method: "post") do %>
+
+			  <%= text_field_tag :raise %>
+
+			  <%= submit_tag("Raise", :class => 'btn btn-danger') %>
+			<% end %>
+
+			<% else %>
+
+			<%= form_tag(line_items_path(:winner => 1, :player_id => player), method: "post") do %>
+
+			  <%= submit_tag("Winner", :class => 'btn-success btn-large winner') %>
+			<% end %>
+
+			<% end %>
+	    </p>
+	  </div>
+
+	</div>
+
+</li>

@@ -1,0 +1,44 @@
+<%- model_class = Round -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:pot) %></th>
+      <th><%= model_class.human_attribute_name(:big_blind) %></th>
+      <th><%= model_class.human_attribute_name(:small_blind) %></th>
+      <th><%= model_class.human_attribute_name(:call_value) %></th>
+      <th><%= model_class.human_attribute_name(:level) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rounds.each do |round| %>
+      <tr>
+        <td><%= link_to round.id, round_path(round) %></td>
+        <td><%= round.pot %></td>
+        <td><%= round.big_blind %></td>
+        <td><%= round.small_blind %></td>
+        <td><%= round.call_value %></td>
+        <td><%= round.level %></td>
+        <td><%=l round.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_round_path(round), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      round_path(round),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_round_path,
+            :class => 'btn btn-primary' %>
